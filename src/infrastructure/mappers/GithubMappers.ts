@@ -1,4 +1,5 @@
-import { Repository } from "../../domain/entities/Repository";
+import { Issue } from '../../domain/entities/Issue';
+import { Repository } from '../../domain/entities/Repository';
 
 export function toRepositoryFromGitHub(raw: any): Repository {
   return {
@@ -14,5 +15,15 @@ export function toRepositoryFromGitHub(raw: any): Repository {
     forks: raw.forks_count,
     watchers: raw.watchers_count,
     language: raw.language,
+  };
+}
+
+export function toIssueFromGitHub(raw: any): Issue {
+  return {
+    id: String(raw.id),
+    title: raw.title,
+    author: raw.user.login,
+    labels: raw.labels.map((label: any) => label.name),
+    createdAt: raw.created_at,
   };
 }
