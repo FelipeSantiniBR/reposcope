@@ -1,14 +1,16 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { searchRepos } from "../../application/usecases/searchRepos";
-import { githubRepositorySource } from "../../infrastructure/datasources/github/githubRepositorySource";
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { searchRepos } from '../../application/usecases/searchRepos';
+import { useDataSource, useRepositorySource } from '../../infrastructure/di/DataSourceProvider';
 
 export function useSearchRepos(query: string) {
-    //usamos useInfiniteQuery por se tratar de uma lista paginada com infinite scroll
-    return useInfiniteQuery({
-        queryKey: ['repos', 'github', query],
-        queryFn: ({ pageParam }) => searchRepos(githubRepositorySource, query, pageParam),
-        initialPageParam: 1,
-        getNextPageParam: (lastPage) => lastPage.nextPage,
-        enabled: query.length > 0,
-    })
+  const source = useRepositorySource();
+  const { sourceName } = useDataSource();
+  //usamos useInfiniteQuery por se tratar de uma lista paginada com infinite scroll
+  return useInfiniteQuery({
+    queryKey: ['repos', sourceName, query],
+    queryFn: ({ pageParam }) => searchRepos(source, query, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    enabled: query.length > 0,
+  });
 }
