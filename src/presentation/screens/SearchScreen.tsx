@@ -1,30 +1,48 @@
 import { useState } from 'react';
 import { useSearchRepos } from '../hooks/useSearchRepos';
 import { Text } from '../components/Text';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, View } from 'react-native';
+import { Sun, Moon, Palette } from 'lucide-react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
+import { useTheme } from '../theme/ThemeProvider';
 import { SourceSwitch } from '../components/SourceSwitch';
 import { Spacing } from '../components/Spacing';
 import { Container } from '../components/Container';
 import { Input } from '../components/Input';
 import { RepositoryCard } from '../components/RepositoryCard';
 import { NetworkError, RateLimitError } from '../../domain/errors/DomainErrors';
+import { ErrorMessage } from '../components/ErrorMessage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 export function SearchScreen({ navigation }: Props) {
   const [query, setQuery] = useState('');
   const { data, fetchNextPage, hasNextPage, isLoading, error, refetch } = useSearchRepos(query);
+  const { mode, toggleMode, colors, spacing } = useTheme();
 
   const repos = data?.pages.flatMap((page) => page.items) ?? [];
   const hasError = Boolean(error);
 
   return (
     <Container>
-      <Text fontSize="xxl" fontWeight="600">
-        Buscar repositórios
-      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text fontSize="xxl" fontWeight="600">
+          Buscar repositórios
+        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
+          <Pressable onPress={() => navigation.navigate('Showcase')} hitSlop={8}>
+            <Palette color={colors.text} size={22} />
+          </Pressable>
+          <Pressable onPress={toggleMode} hitSlop={8}>
+            {mode === 'dark' ? (
+              <Sun color={colors.text} size={22} />
+            ) : (
+              <Moon color={colors.text} size={22} />
+            )}
+          </Pressable>
+        </View>
+      </View>
       <Spacing />
       <SourceSwitch />
       <Spacing />
@@ -40,11 +58,7 @@ export function SearchScreen({ navigation }: Props) {
 
       {isLoading && <ActivityIndicator />}
 
-      {error instanceof RateLimitError && <Text>{error.message}</Text>}
-      {error instanceof NetworkError && <Text>{error.message}</Text>}
-      {error && !(error instanceof RateLimitError) && !(error instanceof NetworkError) && (
-        <Text>Ocorreu um erro inesperado.</Text>
-      )}
+      <ErrorMessage error={error} />
 
       {!isLoading && !hasError && query.length > 0 && repos.length === 0 && (
         <Text>Nenhum repositório encontrado.</Text>

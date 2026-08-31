@@ -2,11 +2,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '../theme/ThemeProvider';
 import { SearchScreen } from '../screens/SearchScreen';
 import { RepositoryScreen } from '../screens/RepositoryScreen';
+import { ShowcaseScreen } from '../screens/ShowcaseScreen';
 import { HeaderBackButton } from '../components/HeaderBackButton';
 
 export type RootStackParamList = {
   Search: undefined;
   Repository: { repositoryId: string };
+  Showcase: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +31,11 @@ export function RootNavigator() {
         name="Repository"
         component={RepositoryScreen}
         options={{ title: 'Repositório' }}
+      />
+      <Stack.Screen
+        name="Showcase"
+        component={ShowcaseScreen}
+        options={{ title: 'Design System' }}
       />
     </Stack.Navigator>
   );

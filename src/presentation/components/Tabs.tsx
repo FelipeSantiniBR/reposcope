@@ -38,7 +38,7 @@ export function Tabs<T extends string>({ items, activeKey, onChange }: Props<T>)
           >
             <Text
               fontWeight={activeKey === item.key ? '700' : '400'}
-              style={{ color: activeKey === item.key ? colors.primary : colors.muted }}
+              variant={activeKey === item.key ? 'body' : 'muted'}
             >
               {item.label}
             </Text>

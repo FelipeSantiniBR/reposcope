@@ -10,6 +10,7 @@ import { Spacing } from '../components/Spacing';
 import { Tabs } from '../components/Tabs';
 import { RepositoryDetailsTab } from '../components/RepositoryDetailsTab';
 import { RepositoryIssuesTab } from '../components/RepositoryIssuesTab';
+import { ErrorMessage } from '../components/ErrorMessage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Repository'>;
 type Tab = 'details' | 'issues';
@@ -18,12 +19,12 @@ export function RepositoryScreen({ route }: Props) {
   const { repositoryId } = route.params;
   const [tab, setTab] = useState<Tab>('details');
 
-  const { data: repository, isLoading, isError } = useRepoDetails(repositoryId);
+  const { data: repository, isLoading, error } = useRepoDetails(repositoryId);
 
   return (
     <Container>
       {isLoading && <ActivityIndicator />}
-      {isError && <Text>Ocorreu um erro ao carregar o repositório.</Text>}
+      <ErrorMessage error={error} fallbackMessage="Ocorreu um erro ao carregar o repositório." />
 
       {repository && (
         <View style={{ flex: 1 }}>
