@@ -1,31 +1,52 @@
 import { useState } from 'react';
 import { useSearchRepos } from '../hooks/useSearchRepos';
-import { ActivityIndicator, FlatList, Text, TextInput, View } from 'react-native';
+import { Text } from '../components/Text';
+import { ActivityIndicator, FlatList } from 'react-native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/RootNavigator';
+import { SourceSwitch } from '../components/SourceSwitch';
+import { Spacing } from '../components/Spacing';
+import { Container } from '../components/Container';
+import { Input } from '../components/Input';
+import { RepositoryCard } from '../components/RepositoryCard';
+import { NetworkError, RateLimitError } from '../../domain/errors/DomainErrors';
 
-export function SearchScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
+
+export function SearchScreen({ navigation }: Props) {
   const [query, setQuery] = useState('');
-  const { data, fetchNextPage, hasNextPage, isLoading, isError, refetch } = useSearchRepos(query);
+  const { data, fetchNextPage, hasNextPage, isLoading, error, refetch } = useSearchRepos(query);
 
   const repos = data?.pages.flatMap((page) => page.items) ?? [];
+  const hasError = Boolean(error);
 
   return (
-    <View style={{ flex: 1, paddingTop: 60, paddingHorizontal: 16 }}>
-      <TextInput
+    <Container>
+      <Text fontSize="xxl" fontWeight="600">
+        Buscar repositórios
+      </Text>
+      <Spacing />
+      <SourceSwitch />
+      <Spacing />
+      <Input
+        placeholder="Buscar..."
         value={query}
         onChangeText={setQuery}
-        placeholder="Buscar repositórios (ex: react native)"
-        style={{
-          borderWidth: 1,
-          borderColor: '#ccc',
-          borderRadius: 8,
-          padding: 10,
-          marginBottom: 12,
-        }}
+        autoCapitalize="none"
+        autoCorrect={false}
+        returnKeyType="search"
       />
+      <Spacing />
 
       {isLoading && <ActivityIndicator />}
-      {isError && <Text>Ocorreu um erro ao buscar. Tente novamente.</Text>}
-      {!isLoading && !isError && query.length > 0 && repos.length === 0 && (
+
+      {error instanceof RateLimitError && <Text>{error.message}</Text>}
+      {error instanceof NetworkError && <Text>{error.message}</Text>}
+      {error && !(error instanceof RateLimitError) && !(error instanceof NetworkError) && (
+        <Text>Ocorreu um erro inesperado.</Text>
+      )}
+
+      {!isLoading && !hasError && query.length > 0 && repos.length === 0 && (
         <Text>Nenhum repositório encontrado.</Text>
       )}
 
@@ -36,16 +57,14 @@ export function SearchScreen() {
         onEndReachedThreshold={0.5}
         onRefresh={refetch}
         refreshing={isLoading}
+        ItemSeparatorComponent={() => <Spacing size="sm" />}
         renderItem={({ item }) => (
-          <View style={{ paddingVertical: 10, borderBottomWidth: 1, borderColor: '#eee' }}>
-            <Text style={{ fontWeight: 'bold' }}>{item.fullName}</Text>
-            <Text numberOfLines={2}>{item.description}</Text>
-            <Text>
-              ⭐ {item.stars} · {item.language}
-            </Text>
-          </View>
+          <RepositoryCard
+            repository={item}
+            onPress={() => navigation.navigate('Repository', { repositoryId: item.fullName })}
+          />
         )}
       />
-    </View>
+    </Container>
   );
 }
