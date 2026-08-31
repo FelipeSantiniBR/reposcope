@@ -12,5 +12,6 @@ export function useRepoIssues(repoId: string) {
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: !!repoId,
+    staleTime: 100 * 60 * 2, //2 minutos
   });
 }

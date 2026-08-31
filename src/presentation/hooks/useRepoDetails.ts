@@ -10,5 +10,6 @@ export function useRepoDetails(id: string) {
     queryKey: ['repo', sourceName, id],
     queryFn: () => getRepoDetails(source, id),
     enabled: !!id,
+    staleTime: 100 * 60 * 2, //2 minutos
   });
 }

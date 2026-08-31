@@ -12,5 +12,6 @@ export function useSearchRepos(query: string) {
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,
     enabled: query.length > 0,
+    staleTime: 100 * 60 * 2, //2 minutos
   });
 }

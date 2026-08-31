@@ -8,6 +8,7 @@ import { Text } from './Text';
 import { Card } from './Card';
 import { Badge } from './Badge';
 import { Spacing } from './Spacing';
+import { ErrorMessage } from './ErrorMessage';
 
 interface Props {
   repositoryId: string;
@@ -23,11 +24,7 @@ export function RepositoryIssuesTab({ repositoryId }: Props) {
     <View style={{ flex: 1 }}>
       {isLoading && <ActivityIndicator />}
 
-      {error instanceof RateLimitError && <Text>{error.message}</Text>}
-      {error instanceof NetworkError && <Text>{error.message}</Text>}
-      {error && !(error instanceof RateLimitError) && !(error instanceof NetworkError) && (
-        <Text>Ocorreu um erro ao carregar as issues.</Text>
-      )}
+      <ErrorMessage error={error} fallbackMessage="Ocorreu um erro ao carregar as issues." />
 
       {!isLoading && !error && issues.length === 0 && <Text>Nenhuma issue encontrada.</Text>}
 
