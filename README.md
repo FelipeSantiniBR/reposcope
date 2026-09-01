@@ -57,6 +57,7 @@ Usei Claude como apoio durante o desenvolvimento, com revisão e adaptação con
 - Os testes de domain/ (verificação estrutural de isolamento) e dos use cases em application/usecases/.
 - Os testes de componente de Button/Badge com React Native Testing Library.
 - A criação de branches e as mensagens de commit, a partir das alterações que eu já tinha feito em cada branch.
+- Componente Tabs foi criado a partir de prompt pedindo o que era necessário.
 - Review final de todo o projeto, pedindo para verificar algum gap referente aos requisitos.
 
 **Prompt usado (exemplos):**
@@ -74,4 +75,5 @@ Usei Claude como apoio durante o desenvolvimento, com revisão e adaptação con
 - Filtro de Pull Requests nas issues do GitHub.
 - Buscar a linguagem principal do GitLab via `/projects/:id/languages`.
 - Pensaria em alguma forma de manter o seletor em todo o fluxo, mas com uma tratativa melhor e mais robusta quando estivesse por exemplo na Issue de um repo no GitHub e mudasse pra GitLab e não existisse esse repo.
+- Criaria outros componentes mais robustos, para não precisar usar View principalmente, e com os styles também criados com valores.
 - Criar um arquivo de translate para o projeto.
