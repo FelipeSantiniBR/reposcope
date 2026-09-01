@@ -7,7 +7,7 @@ export function SourceSwitch() {
   const { colors, spacing, radius } = useTheme();
   const { sourceName, setSourceName } = useDataSource();
 
-  const options: Array<{ key: 'github' | 'gitlab'; label: string }> = [
+  const options: { key: 'github' | 'gitlab'; label: string }[] = [
     { key: 'github', label: 'GitHub' },
     { key: 'gitlab', label: 'GitLab' },
   ];

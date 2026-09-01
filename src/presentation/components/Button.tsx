@@ -50,7 +50,7 @@ export function Button({
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={textColorByVariant[variant]} />
+        <ActivityIndicator testID="button-loading-indicator" color={textColorByVariant[variant]} />
       ) : (
         <Text fontWeight="600" style={{ color: textColorByVariant[variant] }}>
           {label}

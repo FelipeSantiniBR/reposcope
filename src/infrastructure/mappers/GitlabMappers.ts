@@ -1,7 +1,26 @@
 import { Issue } from '../../domain/entities/Issue';
 import { Repository } from '../../domain/entities/Repository';
 
-export function toRepositoryFromGitLab(raw: any): Repository {
+interface GitLabProjectDto {
+  id: number;
+  name: string;
+  path_with_namespace: string;
+  namespace?: { name: string };
+  avatar_url?: string | null;
+  description: string | null;
+  star_count: number;
+  forks_count: number;
+}
+
+interface GitLabIssueDto {
+  id: number;
+  title: string;
+  author?: { username: string };
+  labels: string[];
+  created_at: string;
+}
+
+export function toRepositoryFromGitLab(raw: GitLabProjectDto): Repository {
   return {
     id: String(raw.id),
     name: raw.name,
@@ -18,7 +37,7 @@ export function toRepositoryFromGitLab(raw: any): Repository {
   };
 }
 
-export function toIssueFromGitLab(raw: any): Issue {
+export function toIssueFromGitLab(raw: GitLabIssueDto): Issue {
   return {
     id: String(raw.id),
     title: raw.title,

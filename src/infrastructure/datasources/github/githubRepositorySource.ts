@@ -1,8 +1,6 @@
-import axios from 'axios';
 import { RepositorySource } from '../../../domain/repositories/RepositorySource';
 import { toRepositoryFromGitHub } from '../../mappers/GithubMappers';
 import { githubHttp } from './githubHttp';
-import { NetworkError, RateLimitError } from '../../../domain/errors/DomainErrors';
 import { handleGitHubError } from './githubErrorHandler';
 
 export const githubRepositorySource: RepositorySource = {
