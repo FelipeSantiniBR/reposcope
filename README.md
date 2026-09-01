@@ -4,6 +4,8 @@ Busca de repositórios com troca de fonte em runtime entre GitHub e GitLab. Expo
 
 ## Instalação e execução
 
+Requer Node `^20.19.4 || ^22.13.0 || ^24.3.0 || >=25.0.0` (exigido pelo React Native 0.86).
+
 ```bash
 git clone https://github.com/FelipeSantiniBR/reposcope.git
 cd reposcope
