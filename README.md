@@ -55,7 +55,7 @@ Usei Claude como apoio durante o desenvolvimento, com revisão e adaptação con
 
 **Gerado/assistido:**
 
-- Um resumo e um roadmap a partir do documento do teste técnico, para organizar a ordem de implementação (domínio → infraestrutura → aplicação → apresentação → design system).
+- Um resumo e um roadmap a partir do documento, para organizar a ordem de implementação (domínio → infraestrutura → aplicação → apresentação → design system).
 - Os testes de domain/ (verificação estrutural de isolamento) e dos use cases em application/usecases/.
 - Os testes de componente de Button/Badge com React Native Testing Library.
 - A criação de branches e as mensagens de commit, a partir das alterações que eu já tinha feito em cada branch.
@@ -64,7 +64,7 @@ Usei Claude como apoio durante o desenvolvimento, com revisão e adaptação con
 
 **Prompt usado (exemplos):**
 
-- "Resuma esse documento de teste técnico e monte um roadmap de implementação."
+- "Resuma esse documento de teste e monte um roadmap de implementação."
 - "Como posso garantir automaticamente, via teste, que meus arquivos de domínio não importam nenhuma lib externa?"
 - "Gere os testes para esses use cases, usando uma fonte de dados fake."
 
