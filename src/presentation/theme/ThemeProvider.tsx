@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { colors, ThemeColors } from "./Colors";
-import { fontSizes } from "./FontSizes";
-import { radius } from "./Radius";
-import { spacing } from "./Spacing";
+import { createContext, ReactNode, useContext, useState } from 'react';
+import { colors, ThemeColors } from './Colors';
+import { fontSizes } from './FontSizes';
+import { radius } from './Radius';
+import { spacing } from './Spacing';
 
 type ThemeMode = 'light' | 'dark';
 

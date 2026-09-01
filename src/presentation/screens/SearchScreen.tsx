@@ -11,14 +11,14 @@ import { Spacing } from '../components/Spacing';
 import { Container } from '../components/Container';
 import { Input } from '../components/Input';
 import { RepositoryCard } from '../components/RepositoryCard';
-import { NetworkError, RateLimitError } from '../../domain/errors/DomainErrors';
 import { ErrorMessage } from '../components/ErrorMessage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 export function SearchScreen({ navigation }: Props) {
   const [query, setQuery] = useState('');
-  const { data, fetchNextPage, hasNextPage, isLoading, error, refetch } = useSearchRepos(query);
+  const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, error, refetch } =
+    useSearchRepos(query);
   const { mode, toggleMode, colors, spacing } = useTheme();
 
   const repos = data?.pages.flatMap((page) => page.items) ?? [];
@@ -70,7 +70,7 @@ export function SearchScreen({ navigation }: Props) {
         onEndReached={() => hasNextPage && fetchNextPage()}
         onEndReachedThreshold={0.5}
         onRefresh={refetch}
-        refreshing={isLoading}
+        refreshing={isRefetching}
         ItemSeparatorComponent={() => <Spacing size="sm" />}
         renderItem={({ item }) => (
           <RepositoryCard

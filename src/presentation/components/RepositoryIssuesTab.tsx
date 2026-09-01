@@ -1,7 +1,6 @@
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { NetworkError, RateLimitError } from '../../domain/errors/DomainErrors';
 import { useRepoIssues } from '../hooks/useRepoIssues';
 import { useTheme } from '../theme/ThemeProvider';
 import { Text } from './Text';
@@ -16,7 +15,7 @@ interface Props {
 
 export function RepositoryIssuesTab({ repositoryId }: Props) {
   const { spacing } = useTheme();
-  const { data, fetchNextPage, hasNextPage, isLoading, error, refetch } =
+  const { data, fetchNextPage, hasNextPage, isLoading, isRefetching, error, refetch } =
     useRepoIssues(repositoryId);
   const issues = data?.pages.flatMap((page) => page.items) ?? [];
 
@@ -34,7 +33,7 @@ export function RepositoryIssuesTab({ repositoryId }: Props) {
         onEndReached={() => hasNextPage && fetchNextPage()}
         onEndReachedThreshold={0.5}
         onRefresh={refetch}
-        refreshing={isLoading}
+        refreshing={isRefetching}
         ItemSeparatorComponent={() => <Spacing size="sm" />}
         renderItem={({ item }) => (
           <Card>

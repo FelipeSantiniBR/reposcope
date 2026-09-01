@@ -1,9 +1,7 @@
 import { View, ViewProps } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 
-interface Props extends ViewProps {}
-
-export function Card({ style, children, ...props }: Props) {
+export function Card({ style, children, ...props }: ViewProps) {
   const { colors, spacing, radius } = useTheme();
 
   return (

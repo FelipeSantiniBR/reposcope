@@ -1,8 +1,8 @@
-import axios from 'axios';
+import { isAxiosError } from 'axios';
 import { NetworkError, RateLimitError } from '../../../domain/errors/DomainErrors';
 
 export function handleGitHubError(err: unknown): never {
-  if (axios.isAxiosError(err)) {
+  if (isAxiosError(err)) {
     if (err.response?.status === 403 || err.response?.status === 429) {
       throw new RateLimitError();
     }

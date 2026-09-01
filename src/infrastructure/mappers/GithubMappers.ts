@@ -1,7 +1,27 @@
 import { Issue } from '../../domain/entities/Issue';
 import { Repository } from '../../domain/entities/Repository';
 
-export function toRepositoryFromGitHub(raw: any): Repository {
+interface GitHubRepositoryDto {
+  id: number;
+  name: string;
+  full_name: string;
+  owner: { login: string; avatar_url: string };
+  description: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  watchers_count: number;
+  language: string | null;
+}
+
+interface GitHubIssueDto {
+  id: number;
+  title: string;
+  user: { login: string };
+  labels: { name: string }[];
+  created_at: string;
+}
+
+export function toRepositoryFromGitHub(raw: GitHubRepositoryDto): Repository {
   return {
     id: String(raw.id),
     name: raw.name,
@@ -18,12 +38,12 @@ export function toRepositoryFromGitHub(raw: any): Repository {
   };
 }
 
-export function toIssueFromGitHub(raw: any): Issue {
+export function toIssueFromGitHub(raw: GitHubIssueDto): Issue {
   return {
     id: String(raw.id),
     title: raw.title,
     author: raw.user.login,
-    labels: raw.labels.map((label: any) => label.name),
+    labels: raw.labels.map((label) => label.name),
     createdAt: raw.created_at,
   };
 }

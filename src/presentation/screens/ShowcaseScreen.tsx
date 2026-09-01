@@ -99,11 +99,7 @@ export function ShowcaseScreen() {
           <Avatar name="user" size="sm" />
           <Avatar name="user" size="md" />
           <Avatar name="user" size="lg" />
-          <Avatar
-            name="user"
-            size="lg"
-            uri="https://avatars.githubusercontent.com/u/1?v=4"
-          />
+          <Avatar name="user" size="lg" uri="https://avatars.githubusercontent.com/u/1?v=4" />
         </View>
         <Spacing />
 

@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { NetworkError, RateLimitError } from '../../../domain/errors/DomainErrors';
 import { RepositorySource } from '../../../domain/repositories/RepositorySource';
 import { toRepositoryFromGitLab } from '../../mappers/GitlabMappers';
 import { gitlabHttp } from './gitlabHttp';
